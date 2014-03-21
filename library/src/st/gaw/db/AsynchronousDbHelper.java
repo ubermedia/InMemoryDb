@@ -1,5 +1,6 @@
 package st.gaw.db;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -10,12 +11,15 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseErrorHandler;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.test.mock.MockContext;
 
 /**
  * the main helper class that saves/restore item in memory using a DB storage
@@ -49,6 +53,35 @@ public abstract class AsynchronousDbHelper<E> extends SQLiteOpenHelper {
 	private final AtomicInteger modifyingTransactionLevel = new AtomicInteger(0);
 
 	/**
+	 * A {@link Context} that doesn't keep a reference to your app {@link Context} for long
+	 */
+	private static class WeakDatabaseContext extends MockContext {
+		private final WeakReference<Context> context;
+		
+		public WeakDatabaseContext(Context base) {
+			this.context = new WeakReference<Context>(base.getApplicationContext());
+		}
+		
+		@Override
+		public File getDatabasePath(String name) {
+			final Context ref = context.get();
+			return null==ref ? null : ref.getDatabasePath(name);
+		}
+		
+		@Override
+		public SQLiteDatabase openOrCreateDatabase(String file, int mode, CursorFactory factory) {
+			final Context ref = context.get();
+			return null==ref ? null : ref.openOrCreateDatabase(file, mode, factory);
+		}
+		
+		@Override
+		public SQLiteDatabase openOrCreateDatabase(String file, int mode, CursorFactory factory, DatabaseErrorHandler errorHandler) {
+			final Context ref = context.get();
+			return null==ref ? null : ref.openOrCreateDatabase(file, mode, factory, errorHandler);
+		}
+	}
+	
+	/**
 	 * @param context Used to open or create the database
 	 * @param name Database filename on disk
 	 * @param version Version number of the database (starting at 1); if the database is older,
@@ -59,7 +92,7 @@ public abstract class AsynchronousDbHelper<E> extends SQLiteOpenHelper {
 	 */
 	@SuppressLint("HandlerLeak")
 	protected AsynchronousDbHelper(Context context, String name, int version, Logger logger, Object initCookie) {
-		super(context, name, null, version);
+		super(new WeakDatabaseContext(context), name, null, version);
 
 		if (logger!=null)
 			LogManager.setLogger(logger);
@@ -273,6 +306,12 @@ public abstract class AsynchronousDbHelper<E> extends SQLiteOpenHelper {
 	@Deprecated
 	public SQLiteDatabase getReadableDatabase() {
 		return super.getReadableDatabase();
+	}
+	
+	@Override
+	@Deprecated
+	public synchronized void close() {
+		throw new IllegalAccessError("do not interfere with our database object");
 	}
 
 	/**
