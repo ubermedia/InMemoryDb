@@ -1,8 +1,8 @@
 package org.gawst.asyncdb;
 
 import android.database.Cursor;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Interface to handle the transformation from a Key ({@link K}) / Value ({@link V}) pair to SQL query selections and from

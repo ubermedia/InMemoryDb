@@ -3,7 +3,7 @@ package org.gawst.asyncdb.purge;
 import org.gawst.asyncdb.source.typed.TypedDatabaseSource;
 
 import android.database.Cursor;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * Helper class to purge a database with a maximum number of items and based on a date field.

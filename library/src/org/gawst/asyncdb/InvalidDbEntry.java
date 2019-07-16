@@ -1,6 +1,6 @@
 package org.gawst.asyncdb;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * Exception to indicate a DB entry is no longer valid/usable, it should be removed from the DB

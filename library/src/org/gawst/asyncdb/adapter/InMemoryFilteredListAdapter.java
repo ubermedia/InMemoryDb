@@ -5,9 +5,9 @@ import org.gawst.asyncdb.InMemoryDbArrayList;
 import org.gawst.asyncdb.InMemoryDbListener;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * A {@link android.widget.ListAdapter ListAdapter} that only shows a subset of elements in a {@link InMemoryDbArrayList}

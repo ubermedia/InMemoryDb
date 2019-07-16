@@ -2,7 +2,7 @@ package org.gawst.asyncdb.source.typed;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import org.gawst.asyncdb.DataSource;
 import org.gawst.asyncdb.InvalidDbEntry;

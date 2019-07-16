@@ -3,7 +3,7 @@ package org.gawst.asyncdb.source;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import org.gawst.asyncdb.MapDatabaseElementHandler;
 import org.gawst.asyncdb.source.typed.TypedSqliteMapDataSource;

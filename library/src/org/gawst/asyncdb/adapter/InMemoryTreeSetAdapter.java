@@ -3,8 +3,8 @@ package org.gawst.asyncdb.adapter;
 import org.gawst.asyncdb.InMemoryDbTreeSet;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 
 /**
  * Basic {@link android.widget.ListAdapter ListAdapter} using a {@link InMemoryDbTreeSet} data source

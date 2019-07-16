@@ -2,7 +2,7 @@ package org.gawst.asyncdb.purge;
 
 import org.gawst.asyncdb.source.typed.TypedDatabaseSource;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 
 /**
